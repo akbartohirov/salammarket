@@ -1,4 +1,9 @@
 .prodcuct-card-title {
-  color: #2bbbad !important;
+  text-transform: capitalize;
+  transition: 0.2s all;
+}
+
+.prodcuct-card-title:hover {
+  color: #313131 !important;
   text-transform: capitalize;
 }

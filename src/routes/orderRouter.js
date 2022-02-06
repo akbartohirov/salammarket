@@ -59,10 +59,11 @@ router.get("/", auth, async (req, res) => {
     const orders = await Order.find();
 
     if (!orders) {
+      res.status(404);
       throw new Error("Not found");
     }
 
-    res.status(200).send(carts);
+    res.status(200).send(orders);
   } catch (e) {
     res.status(500).send({ error: e.message });
   }

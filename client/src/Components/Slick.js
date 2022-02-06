@@ -1,6 +1,5 @@
 import React from "react";
 import Slider from "react-slick";
-// import SlickCard from "./SlickCard";
 
 const Slick = ({ data, Card, numSlide }) => {
   var settings = {

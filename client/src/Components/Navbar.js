@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import logo from "../Salammarketlogo.png";
 import AuthContext from "../Context/AuthContext";
 
-const Navbar = ({ isAuthenticated }) => {
+const Navbar = ({ isAuthenticated, isAdmin }) => {
   const sidebar = () => {
     var elems = document.querySelectorAll(".sidenav");
     window.M.Sidenav.init(elems);
@@ -28,7 +28,7 @@ const Navbar = ({ isAuthenticated }) => {
               alt="logo"
               className="logo"
               src={logo}
-              style={{ height: "100%", padding: "5px" }}
+              style={{ height: "100%", padding: "10px" }}
             />
           </a>
           <a
@@ -41,6 +41,14 @@ const Navbar = ({ isAuthenticated }) => {
             </i>
           </a>
           <ul className="right hide-on-med-and-down">
+            {isAdmin && (
+              <li>
+                <Link className="indigo-text text-danken-5" to="/admin/users">
+                  {"  "}
+                  <i className="fas fa-user-cog"></i>&nbsp; Админ панель
+                </Link>
+              </li>
+            )}
             <li>
               <Link
                 className="indigo-text text-danken-5"
@@ -54,7 +62,7 @@ const Navbar = ({ isAuthenticated }) => {
             <li>
               <Link className="indigo-text text-danken-5" to="/basket">
                 {" "}
-                <i className="fas fa-cart-arrow-down mr-1"></i>Корзина
+                <i className="fas fa-cart-arrow-down mr-1"></i>Корзина{" "}
               </Link>
             </li>
 
@@ -101,7 +109,7 @@ const Navbar = ({ isAuthenticated }) => {
 
         {isAuthenticated && (
           <li style={{ cursor: "pointer" }} onClick={(e) => onLogOut(e)}>
-            <a hr className="indigo-text text-danken-5" ef="/">
+            <a href="/" className="indigo-text text-danken-5">
               {"  "}
               <i className="fas fa-arrow-right mr-1"></i>Выйти
             </a>

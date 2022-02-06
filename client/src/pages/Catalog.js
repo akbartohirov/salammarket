@@ -27,7 +27,7 @@ const Catalog = () => {
         {catalog === null ? (
           <Loading />
         ) : (
-          catalog.map((item, index) => <CatalogItem key={index} data={item} />)
+          catalog.map((item, index) => <CatalogItem key={index} item={item} />)
         )}
       </div>
     </div>

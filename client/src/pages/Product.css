@@ -9,13 +9,6 @@
   font-size: 1.2rem;
 }
 
-.image-box {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .inner-box {
   height: 100%;
   width: auto;
@@ -46,9 +39,6 @@
   text-align: right;
 }
 
-.product-button {
-}
-
 .dots {
   width: 100% !important;
   display: flex;
@@ -71,5 +61,5 @@
 }
 
 .slider-dot:focus {
-  background-color: red;
+  background-color: #eee;
 }

@@ -8,8 +8,13 @@ import MainPage from "../pages/MainPage";
 import Catalog from "../pages/Catalog";
 import Product from "../pages/Product";
 import CatalogProduct from "../pages/CatalogProduct";
+import AdminUsersPage from "../pages/adminpages/AdminUsersPage";
+import AdminProductsPage from "../pages/adminpages/AdminProductsPage";
+import AdminOrdersPage from "../pages/adminpages/AdminOrdersPage";
+import AdminUserDetailsPage from "../pages/adminpages/admindetailspage/AdminUserDetailsPage";
+import AdminProductDetailsPage from "../pages/adminpages/admindetailspage/AdminProductDetailsPage";
 
-const useRoutes = (isAuthenticated) => {
+const useRoutes = (isAuthenticated, user) => {
   if (isAuthenticated) {
     return (
       <Switch>
@@ -40,7 +45,43 @@ const useRoutes = (isAuthenticated) => {
         <Route exact path="/register">
           <Register />
         </Route>
-        <Redirect to="/" />
+
+        {user && (
+          <>
+            <Route exact path="/admin/users">
+              <AdminUsersPage />
+            </Route>
+
+            <Route exact path="/admin/products">
+              <AdminProductsPage />
+            </Route>
+
+            <Route path="/admin/orders">
+              <AdminOrdersPage />
+            </Route>
+
+            <Route exact path="/admin/users/:id">
+              <AdminUserDetailsPage />
+            </Route>
+
+            <Route exact path="/admin/products/:id">
+              <AdminProductDetailsPage />
+            </Route>
+
+            {/* <Route exact path="/admin/users/:id">
+              <Catalog />
+            </Route>
+
+            <Route exact path="/admin/products/:id">
+              <CatalogProduct />
+            </Route>
+
+            <Route path="/admin/orders/:id">
+              <Product />
+            </Route> */}
+          </>
+        )}
+        {/* <Redirect to="/" /> */}
       </Switch>
     );
   }
@@ -73,7 +114,7 @@ const useRoutes = (isAuthenticated) => {
       <Route exact path="/register">
         <Register />
       </Route>
-      <Redirect to="/" />
+      {/* <Redirect to="/" /> */}
     </Switch>
   );
 };

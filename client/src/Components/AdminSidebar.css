@@ -1,0 +1,36 @@
+.adminSidebar {
+  flex: 1;
+  padding-left: 20px;
+  background-color: #eee;
+  position: relative;
+}
+
+.sidebarList {
+  position: sticky;
+  top: 6rem;
+}
+
+.sidebarListItem {
+  font-size: 1.3rem;
+  display: flex;
+  justify-content: space-between;
+  color: rgb(139, 139, 139);
+  margin: 20px 0;
+  padding: 10px 5px;
+  align-items: center;
+}
+
+.sidebarListItem a {
+  color: rgb(139, 139, 139);
+}
+
+.sidebarListItem:hover {
+}
+
+.sidebarIcon {
+  flex: 1;
+}
+
+.sidebarListItemTitle {
+  flex: 4;
+}

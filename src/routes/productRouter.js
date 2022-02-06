@@ -34,15 +34,19 @@ const upload = multer({
   fileFilter: fileFilter,
 });
 
-router.post("/", upload.array("img", 10), async (req, res) => {
-  // const images = req.files.map((item) => {
-  //   return { filename: item.filename, path: item.path };
-  // });
+router.post("/", auth, upload.array("img", 10), async (req, res) => {
+  const uploads = req.files;
+
+  const images = uploads
+    ? uploads.map((item) => {
+        return { filename: item.filename, path: item.path };
+      })
+    : null;
 
   const productForm = {
     title: req.body.title,
     description: req.body.description,
-    img: "images",
+    img: images,
     category: req.body.category,
     color: req.body.color,
     boughtPrice: req.body.boughtPrice,
@@ -61,16 +65,43 @@ router.post("/", upload.array("img", 10), async (req, res) => {
   }
 });
 
-router.patch("/:id", async (req, res) => {
+router.put("/:id", upload.array("img", 10), async (req, res) => {
+  const uploads = req.files;
+
   const id = req.params.id;
-  const toUpdate = req.body;
+  const {
+    title,
+    category,
+    description,
+    color,
+    sellPrice,
+    boughtPrice,
+    amount,
+    img,
+  } = req.body;
+
+  const images = uploads
+    ? uploads.map((item) => {
+        return { filename: item.filename, path: item.path };
+      })
+    : null;
+  const toUpdate = {
+    title,
+    category,
+    description,
+    color,
+    sellPrice,
+    boughtPrice,
+    amount,
+    img: images ? images : img,
+  };
   try {
     const updateProduct = await Product.findByIdAndUpdate(id, toUpdate, {
       new: true,
       runValidators: true,
     });
 
-    res.status(201).send(updateProduct);
+    res.status(200).send(updateProduct);
   } catch (e) {
     res.status(500).send({ error: e.message });
   }
@@ -78,9 +109,16 @@ router.patch("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   const id = req.params.id;
-  const toDelete = req.body;
+
+  const product = await Product.findById(id);
+
+  if (!product) {
+    res.status(404);
+    return res.send({ message: "Product not found" });
+  }
+
   try {
-    await Product.findByIdAndDelete(id);
+    await product.remove();
 
     res.status(201).send("Product has been deleted");
   } catch (e) {
@@ -93,12 +131,18 @@ router.get("/", async (req, res) => {
     const qNew = req.query.new;
     const qCategory = req.query.category;
 
+    console.log(req.query);
+
     let products;
 
-    if (qNew) {
+    if (qNew && qCategory) {
+      products = await Product.find({ category: qCategory })
+        .sort({ createdAt: 1 })
+        .limit(1);
+    } else if (qNew) {
       products = await Product.find().sort({ createdAt: -1 }).limit(10);
     } else if (qCategory) {
-      products = await Product.find({ categories: { $in: [qCategory] } });
+      products = await Product.find({ category: qCategory });
     } else {
       products = await Product.find();
     }

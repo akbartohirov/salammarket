@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  CarouselProvider,
-  Slide,
-  Slider,
-  ImageWithZoom,
-  Dot,
-} from "pure-react-carousel";
+import { CarouselProvider, Slide, Slider, Dot } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import "./SlickCard.css";
 
@@ -14,7 +8,7 @@ const SlickCard = ({ images }) => {
   return (
     <CarouselProvider
       naturalSlideWidth={250}
-      naturalSlideHeight={150}
+      naturalSlideHeight={200}
       totalSlides={images && images.length}
       className="row"
     >
@@ -22,9 +16,12 @@ const SlickCard = ({ images }) => {
         {images &&
           images.map((img, index) => (
             <Slide index={index} key={index}>
-              <div className="image-box">
-                <ImageWithZoom className="image-box-img" src={img.path} />
-              </div>
+              <img
+                src={`/${img.path}`}
+                className="image-box-product-img"
+                alt=""
+                style={{ width: "100%" }}
+              />
             </Slide>
           ))}
       </Slider>
@@ -32,7 +29,7 @@ const SlickCard = ({ images }) => {
         {images &&
           images.map((img, index) => (
             <Dot slide={index} key={index} className="slider-dot">
-              <img src={img.path} alt="" />
+              <img src={`/${img.path}`} alt="product" />
             </Dot>
           ))}
       </div>

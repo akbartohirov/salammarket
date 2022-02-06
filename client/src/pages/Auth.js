@@ -24,15 +24,17 @@ const Auth = () => {
 
   const onLogin = async (e) => {
     e.preventDefault();
-    console.log(form);
     try {
-      const user = await axios.post("/auth/login", form, {
+      const { data } = await axios.post("/auth/login", form, {
         headers: {
           "Conent-Type": "application/json",
         },
       });
+
+      console.log(data.user.isAdmin);
+
       window.M.toast({ html: "Вы успешно вошли", classes: "loginToast" });
-      auth.login(user.data.token, user.data.user._id);
+      auth.login(data.token, data.user._id, data.user.isAdmin);
       history.push("/");
     } catch (e) {
       window.M.toast({ html: "Что то пошло не так", classes: "loginToastRed" });

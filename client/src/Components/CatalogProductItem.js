@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import "./CatalogProductItem.css";
 
 const CatalogProductItem = ({ data, ownstyle }) => {
-  // console.log(baseUrlForImg + data.img[0].path);
-
   const basketHandler = (e) => {
     let addedProduct = JSON.parse(localStorage.getItem("salamBasket"));
 
@@ -14,8 +12,11 @@ const CatalogProductItem = ({ data, ownstyle }) => {
         JSON.stringify([
           {
             productId: data._id,
+            img: data.img,
+            title: data.title,
             quantity: 1,
             price: data.sellPrice,
+            amount: data.amount,
           },
         ])
       );
@@ -32,8 +33,11 @@ const CatalogProductItem = ({ data, ownstyle }) => {
       } else if (addedProduct && !productIds.includes(data._id)) {
         addedProduct.push({
           productId: data._id,
+          img: data.img,
+          title: data.title,
           quantity: 1,
           price: data.sellPrice,
+          amount: data.amount,
         });
         localStorage.setItem("salamBasket", JSON.stringify(addedProduct));
         window.M.toast({ html: "Продукт добавлен", classes: "loginToast" });
@@ -44,12 +48,23 @@ const CatalogProductItem = ({ data, ownstyle }) => {
   return (
     <div className="col s12 m4" style={ownstyle && ownstyle}>
       <div className="card">
-        <div className="card-image">
-          <img src={data && data.img[0].path} alt="product img" />
+        <div
+          className="card-image"
+          style={{ height: "220px", overflow: "hidden", position: "relative" }}
+        >
+          <img
+            style={{
+              position: "absolute",
+              top: "50%",
+              transform: "translateY(-50%)",
+            }}
+            src={data && data.img[0].path}
+            alt="product img"
+          />
           <Link
             to={`/product/${data._id}`}
             className="card-title prodcuct-card-title "
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", color: "#000" }}
           >
             {data.title}
           </Link>

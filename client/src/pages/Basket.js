@@ -6,7 +6,7 @@ import axios from "axios";
 const Basket = () => {
   const [active, setActive] = React.useState("Доставка");
   const [typeUser, setTypeUser] = React.useState("individual");
-  const [orders, setOrders] = React.useState(null);
+  const [orders, setOrders] = React.useState([]);
 
   const initialState = {
     userId: localStorage.getItem("userData")
@@ -24,32 +24,30 @@ const Basket = () => {
   const [entityOrder, setEntityOrder] = React.useState(initialState);
 
   //quantity order function
-  const quantityHandler = (e, data) => {
+  const quantityHandler = (e, id) => {
     const orderquantity = JSON.parse(localStorage.getItem("salamBasket"));
     let theOrder = orderquantity.map((item) => {
-      if (item.productId === data._id) {
-        item.quantity = +e.target.value;
+      if (item.productId === id) {
+        item.quantity = Number(e.target.value);
       }
-
       return item;
     });
-
     localStorage.setItem("salamBasket", JSON.stringify(theOrder));
-
-    if (e.target.value < 0 || e.target.value === 0) {
-      e.target.value = 1;
-    }
+    setOrders(theOrder);
   };
 
   //delete order function
-  const deleteHandler = (e, data) => {
+  const deleteHandler = (e, id) => {
+    console.log(id);
     let basket = JSON.parse(localStorage.getItem("salamBasket"));
+    console.log(basket);
     if (basket) {
-      const filter = basket.filter((item) => item.productId !== data._id);
-      localStorage.setItem("salamBasket", JSON.stringify(filter));
-    }
+      const filter = basket.filter((item) => item.productId !== id);
+      console.log(filter);
 
-    document.location.reload();
+      localStorage.setItem("salamBasket", JSON.stringify(filter));
+      setOrders(filter);
+    }
   };
 
   //handling input value
@@ -65,25 +63,8 @@ const Basket = () => {
 
   //getting orders from localstorage and request
   React.useEffect(() => {
-    const basket = JSON.parse(localStorage.getItem("salamBasket"));
-    if (basket) {
-      const ids = basket.map((item) => item.productId);
-
-      axios
-        .post(
-          "/products/cart",
-          { products: ids },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
-        .then((res) => {
-          console.log(res.data);
-          setOrders(res.data);
-        });
-    }
+    const orders = JSON.parse(localStorage.getItem("salamBasket"));
+    setOrders(orders);
   }, []);
 
   //submit order
@@ -113,7 +94,7 @@ const Basket = () => {
           console.log(e.message);
           window.M.toast({
             html: "Что то прошло не так",
-            classes: "loginToast",
+            classes: "loginToastYellow",
           });
         });
     }
@@ -161,7 +142,7 @@ const Basket = () => {
           </div>
 
           <div className="basket-orders">
-            {orders ? (
+            {orders.length > 0 ? (
               orders.map((order, index) => (
                 <BasketOrderItem
                   data={order}
@@ -180,13 +161,32 @@ const Basket = () => {
           <div className="form row">
             <div className="form-price">
               <span className="form-price-title">
-                Товары <sup>1</sup>{" "}
+                Товары{" "}
+                <sup>
+                  {orders.length > 0
+                    ? orders.reduce((acc, item) => acc + 1 * item.quantity, 0)
+                    : 0}
+                </sup>{" "}
               </span>
-              <span className="form-price-number">1</span>
+              <span className="form-price-number">
+                {orders.length > 0
+                  ? orders.reduce(
+                      (acc, item) => acc + 1 * item.quantity * item.price,
+                      0
+                    )
+                  : 0}
+              </span>
             </div>
             <div className="form-summ">
               <span className="form-summ-title">Итого</span>
-              <span className="form-summ-number">1</span>
+              <span className="form-summ-number">
+                {orders.length > 0
+                  ? orders.reduce(
+                      (acc, item) => acc + 1 * item.quantity * item.price,
+                      0
+                    )
+                  : 0}
+              </span>
             </div>
             <div className="form-action">
               <button

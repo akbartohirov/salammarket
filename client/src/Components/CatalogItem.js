@@ -1,25 +1,35 @@
 import React from "react";
+import axios from "axios";
+import "./CatalogItem.css";
 import { Link } from "react-router-dom";
 
-const CatalogItem = ({ data }) => {
+const CatalogItem = ({ item }) => {
+  const [image, setImage] = React.useState("");
+
+  React.useEffect(() => {
+    axios
+      .get(`/products?new=true&category=${item}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then(({ data }) => {
+        setImage(data[0].img[0].path);
+      });
+  }, [item]);
+
   return (
-    <div className="catalog__item">
-      <div className="catalog__item-image">
-        <img
-          alt="product img"
-          src="//res.cloudinary.com/lmru-test/image/upload/d_placeholder.jpg,f_auto,q_90,w_80,h_80,dpr_1.25/elbrus/images/catalog-popup-images/version5/novogodnie-tovary.png"
-        />
+    <Link to={`/category?q=${item}`} style={{ color: "#000" }}>
+      <div className="catalog__item">
+        <div
+          className="catalog__item-image"
+          style={{ backgroundImage: `url(${image})` }}
+        ></div>
+        <div className="catalog__item-content">
+          <h5 className="catalog__item-content-title">{item}</h5>
+        </div>
       </div>
-      <div className="catalog__item-content">
-        <Link to={`/category?q=${data}`} style={{ color: "#000" }}>
-          <h5 className="catalog__item-content-title">{data}</h5>
-        </Link>
-        <p className="catalog__item-content-text">
-          lorem ipsum lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem
-          ipsumlorem ipsum
-        </p>
-      </div>
-    </div>
+    </Link>
   );
 };
 

@@ -9,19 +9,19 @@ import { useAuth } from "./hooks/useAuth";
 function App() {
   const auth = useAuth();
 
-  const { login, logout, token, userId } = auth;
+  const { login, logout, token, userId, user } = auth;
 
   const isAuthenticated = !!token;
 
-  const routes = useRoutes(isAuthenticated);
+  const routes = useRoutes(isAuthenticated, user);
 
   return (
     <AuthContext.Provider
-      value={{ login, logout, token, userId, isAuthenticated }}
+      value={{ login, logout, token, userId, isAuthenticated, user }}
     >
       <Router>
-        <Navbar isAuthenticated={isAuthenticated} />
-        {routes}
+        <Navbar isAuthenticated={isAuthenticated} isAdmin={user} />
+        <main>{routes}</main>
         <Footer />
       </Router>
     </AuthContext.Provider>

@@ -2,7 +2,6 @@ import React from "react";
 import "./BasketOrderItem.css";
 
 const BasketOrderItem = ({ data, deleteHandler, quantityHandler }) => {
-  console.log(data.amount);
   return (
     <div className="basket-order mb-2">
       <div className="order-image-box ml-1">
@@ -11,9 +10,13 @@ const BasketOrderItem = ({ data, deleteHandler, quantityHandler }) => {
       <div className="order-title">
         <p>{data.title}</p>
       </div>
-      {/* <div style={{}} className="order-quantity row">
-        <select class="browser-default">
-          <option value="" disabled selected>
+      <div className="order-quantity row">
+        <select
+          className="browser-default"
+          value={data.quantity}
+          onChange={(e) => quantityHandler(e, data.productId)}
+        >
+          <option value="шт." disabled defaultChecked>
             шт.
           </option>
           {[...Array(data.amount).keys()].map((el) => (
@@ -22,13 +25,13 @@ const BasketOrderItem = ({ data, deleteHandler, quantityHandler }) => {
             </option>
           ))}
         </select>
-      </div> */}
+      </div>
       <div className="order-price">
-        <h4>{data.sellPrice}$</h4>
+        <h4>{data.price}$</h4>
       </div>
       {deleteHandler && (
         <div
-          onClick={deleteHandler && ((e) => deleteHandler(e, data))}
+          onClick={deleteHandler && ((e) => deleteHandler(e, data.productId))}
           className="order-delete"
         >
           <i className="fas fa-trash-alt delete"></i>

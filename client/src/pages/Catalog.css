@@ -4,18 +4,3 @@
   width: 100%;
   flex-wrap: wrap;
 }
-
-.catalog .catalog__item {
-  width: 250px;
-  margin: 10px 1.5%;
-  height: auto;
-  display: flex;
-}
-
-.catalog .catalog__item .catalog__item-image {
-  margin-right: 10px;
-}
-
-.catalog .catalog__item .catalog__item-image img {
-  width: 50px;
-}
