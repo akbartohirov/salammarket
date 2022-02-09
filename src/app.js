@@ -5,10 +5,12 @@ const mongoose = require("mongoose");
 const authRouter = require("./routes/authRouter");
 const userRouter = require("./routes/userRouter");
 const productRouter = require("./routes/productRouter");
-const cartRouter = require("./routes/cartRouter");
 const orderRouter = require("./routes/orderRouter");
 dotenv.config({ path: ".env" });
 const cors = require("cors");
+const categoryRoutes = require("./routes/categoryRoutes");
+const subCategoryRoutes = require("./routes/subCategoryRoutes");
+const subSubCategoryRoutes = require("./routes/subSubCategoryRoutes");
 
 mongoose
   .connect(process.env.DB, {
@@ -27,8 +29,10 @@ app.use("/uploads", express.static("uploads"));
 app.use("/users", userRouter);
 app.use("/auth", authRouter);
 app.use("/products", productRouter);
-app.use("/carts", cartRouter);
 app.use("/orders", orderRouter);
+app.use("/category", categoryRoutes);
+app.use("/subcategory", subCategoryRoutes);
+app.use("/subsubcategory", subSubCategoryRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use("/", express.static(path.join(__dirname, "../client/build")));

@@ -21,10 +21,9 @@ const CatalogItem = ({ item }) => {
   return (
     <Link to={`/category?q=${item}`} style={{ color: "#000" }}>
       <div className="catalog__item">
-        <div
-          className="catalog__item-image"
-          style={{ backgroundImage: `url(${image})` }}
-        ></div>
+        <div className="catalog__item-image">
+          <img src={image} alt="product__catalog" />
+        </div>
         <div className="catalog__item-content">
           <h5 className="catalog__item-content-title">{item}</h5>
         </div>

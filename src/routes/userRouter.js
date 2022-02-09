@@ -1,6 +1,6 @@
 const express = require("express");
 const User = require("../models/User");
-const router = new express.Router();
+const router = express.Router();
 const { auth, admin } = require("../middleware/auth");
 
 //get all users

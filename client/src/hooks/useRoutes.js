@@ -13,6 +13,7 @@ import AdminProductsPage from "../pages/adminpages/AdminProductsPage";
 import AdminOrdersPage from "../pages/adminpages/AdminOrdersPage";
 import AdminUserDetailsPage from "../pages/adminpages/admindetailspage/AdminUserDetailsPage";
 import AdminProductDetailsPage from "../pages/adminpages/admindetailspage/AdminProductDetailsPage";
+import AdminOrderDetailsPage from "../pages/adminpages/admindetailspage/AdminOrderDetailsPage";
 
 const useRoutes = (isAuthenticated, user) => {
   if (isAuthenticated) {
@@ -56,7 +57,7 @@ const useRoutes = (isAuthenticated, user) => {
               <AdminProductsPage />
             </Route>
 
-            <Route path="/admin/orders">
+            <Route exact path="/admin/orders">
               <AdminOrdersPage />
             </Route>
 
@@ -68,20 +69,11 @@ const useRoutes = (isAuthenticated, user) => {
               <AdminProductDetailsPage />
             </Route>
 
-            {/* <Route exact path="/admin/users/:id">
-              <Catalog />
+            <Route exact path="/admin/orders/:id">
+              <AdminOrderDetailsPage />
             </Route>
-
-            <Route exact path="/admin/products/:id">
-              <CatalogProduct />
-            </Route>
-
-            <Route path="/admin/orders/:id">
-              <Product />
-            </Route> */}
           </>
         )}
-        {/* <Redirect to="/" /> */}
       </Switch>
     );
   }

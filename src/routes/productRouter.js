@@ -2,7 +2,7 @@ const express = require("express");
 const { auth, admin } = require("../middleware/auth");
 const mongoose = require("mongoose");
 const Product = require("../models/Product");
-const router = new express.Router();
+const router = express.Router();
 const multer = require("multer");
 
 const storage = multer.diskStorage({
@@ -130,8 +130,6 @@ router.get("/", async (req, res) => {
   try {
     const qNew = req.query.new;
     const qCategory = req.query.category;
-
-    console.log(req.query);
 
     let products;
 

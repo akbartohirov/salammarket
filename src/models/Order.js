@@ -10,7 +10,7 @@ const CartSchema = new mongoose.Schema(
     city: { type: String, required: true },
     street: { type: String, required: true },
     typeSending: { type: String },
-    status: { type: String, default: "pending" },
+    status: { type: String, default: "новый" },
   },
   {
     timestamps: true,

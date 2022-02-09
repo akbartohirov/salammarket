@@ -8,7 +8,11 @@
 .catalog__item .catalog__item-image {
   margin-right: 2rem;
   height: 100%;
-  background-size: cover;
+  overflow: hidden;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .catalog__item .catalog__item-image img {

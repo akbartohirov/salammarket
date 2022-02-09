@@ -8,6 +8,19 @@ const Basket = () => {
   const [typeUser, setTypeUser] = React.useState("individual");
   const [orders, setOrders] = React.useState([]);
 
+  //getting orders from localstorage and request
+  React.useEffect(() => {
+    if (localStorage.getItem("salamBasket")) {
+      const orders = JSON.parse(localStorage.getItem("salamBasket"));
+      setOrders(orders);
+    }
+  }, []);
+
+  const typeUserHandler = (e) => {
+    setTypeUser(e.target.value);
+    console.log(typeUser);
+  };
+
   const initialState = {
     userId: localStorage.getItem("userData")
       ? JSON.parse(localStorage.getItem("userData")).userId
@@ -61,12 +74,6 @@ const Basket = () => {
     setEntityOrder({ ...entityOrder, typeSending: e.target.value });
   };
 
-  //getting orders from localstorage and request
-  React.useEffect(() => {
-    const orders = JSON.parse(localStorage.getItem("salamBasket"));
-    setOrders(orders);
-  }, []);
-
   //submit order
   const submitHandler = (e) => {
     if (!localStorage.getItem("userData")) {
@@ -76,27 +83,28 @@ const Basket = () => {
       });
       return;
     } else {
-      axios
-        .post("/orders", entityOrder, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: JSON.parse(localStorage.getItem("userData")).token,
-          },
-        })
-        .then((res) => {
-          setEntityOrder(initialState);
-          window.M.toast({
-            html: "Вы успешно отправили ваш заказ",
-            classes: "loginToast",
-          });
-        })
-        .catch((e) => {
-          console.log(e.message);
-          window.M.toast({
-            html: "Что то прошло не так",
-            classes: "loginToastYellow",
-          });
-        });
+      console.log(entityOrder);
+      // axios
+      //   .post("/orders", entityOrder, {
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       Authorization: JSON.parse(localStorage.getItem("userData")).token,
+      //     },
+      //   })
+      //   .then((res) => {
+      //     setEntityOrder(initialState);
+      //     window.M.toast({
+      //       html: "Вы успешно отправили ваш заказ",
+      //       classes: "loginToast",
+      //     });
+      //   })
+      //   .catch((e) => {
+      //     console.log(e.message);
+      //     window.M.toast({
+      //       html: "Что то прошло не так",
+      //       classes: "loginToastYellow",
+      //     });
+      //   });
     }
   };
 
@@ -208,7 +216,7 @@ const Basket = () => {
                       name="group1"
                       type="radio"
                       value={"individual"}
-                      onChange={(e) => setTypeUser(e.target.value)}
+                      onChange={(e) => typeUserHandler(e)}
                       checked={typeUser === "individual" ? true : false}
                     />
                     <span>Я физическое лицо</span>
@@ -222,7 +230,7 @@ const Basket = () => {
                       name="group1"
                       type="radio"
                       value={"entity"}
-                      onChange={(e) => setTypeUser(e.target.value)}
+                      onChange={(e) => typeUserHandler(e)}
                     />
                     <span>Я юридическое лицо</span>
                   </label>

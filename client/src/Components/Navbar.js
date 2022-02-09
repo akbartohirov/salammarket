@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 // import dark from "../dark.svg";
 import logo from "../Salammarketlogo.png";
+import logo2 from "../Salam market logo svg100.svg";
 import AuthContext from "../Context/AuthContext";
 
 const Navbar = ({ isAuthenticated, isAdmin }) => {
@@ -21,7 +22,7 @@ const Navbar = ({ isAuthenticated, isAdmin }) => {
 
   return (
     <React.Fragment>
-      <nav className="grey lighten-4 sticky">
+      <nav className="white sticky">
         <div className="nav-wrapper container">
           <a href="/" className="brand-logo" style={{ height: "100%" }}>
             <img

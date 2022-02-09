@@ -1,6 +1,7 @@
 .box-image {
   height: 320px;
   border: 1px solid #eee;
+  border-radius: 5px;
   width: 100%;
   padding: 0 50px;
   background-color: #eee;

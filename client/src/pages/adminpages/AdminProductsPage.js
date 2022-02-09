@@ -239,7 +239,7 @@ const AdminProductsPage = () => {
       <AdminSidebar />
       <div className="adminProductsPage">
         <div className="adminProductsPageHeader">
-          <p className="adminUserPageTitle">Все продукты</p>
+          <p className="adminProductPageTitle">Все продукты</p>
           <button
             data-target="modal1"
             className="btn modal-trigger right-align"

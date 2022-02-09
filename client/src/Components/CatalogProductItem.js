@@ -46,7 +46,7 @@ const CatalogProductItem = ({ data, ownstyle }) => {
   };
 
   return (
-    <div className="col s12 m4" style={ownstyle && ownstyle}>
+    <div className="col s12 m3" style={ownstyle && ownstyle}>
       <div className="card">
         <div
           className="card-image"
@@ -54,13 +54,14 @@ const CatalogProductItem = ({ data, ownstyle }) => {
         >
           <img
             style={{
-              position: "absolute",
-              top: "50%",
-              transform: "translateY(-50%)",
+              width: "100%",
+              height: "auto",
             }}
             src={data && data.img[0].path}
             alt="product img"
           />
+        </div>
+        <div className="card-content">
           <Link
             to={`/product/${data._id}`}
             className="card-title prodcuct-card-title "
@@ -68,12 +69,8 @@ const CatalogProductItem = ({ data, ownstyle }) => {
           >
             {data.title}
           </Link>
-        </div>
-        <div className="card-content">
-          <p>
-            I am a very simple card. I am good at containing small bits of
-            information. I am convenient because I require little markup to use
-            effectively.
+          <p style={{ textAlign: "right", fontWeight: "600" }}>
+            {data.sellPrice} сум
           </p>
         </div>
         <div className="card-action">

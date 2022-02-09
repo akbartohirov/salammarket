@@ -27,7 +27,7 @@ const BasketOrderItem = ({ data, deleteHandler, quantityHandler }) => {
         </select>
       </div>
       <div className="order-price">
-        <h4>{data.price}$</h4>
+        <h4 style={{ fontSize: "1.5rem" }}>{data.price}$</h4>
       </div>
       {deleteHandler && (
         <div
